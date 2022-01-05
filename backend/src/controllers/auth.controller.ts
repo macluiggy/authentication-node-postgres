@@ -1,6 +1,9 @@
 import pool from "../db";
 import { hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+// import CONSTS from "../constants";
+const { SECRET } = require("../constants");
+// const { SECRET } = CONSTS;
 
 export const getUsers = async (req, res) => {
   try {

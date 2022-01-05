@@ -4,11 +4,13 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node dist/bundle.js",
+    "start": "node dist/index.js",
+    "start2": "node dist/bundle.js",
     "test": "NODE_ENV=test mocha --check-leaks -r tsconfig-paths/register -r ts-node/register \"src/test/**/*.test.[tj]s\" --watch",
     "test2": "NODE_ENV=test mocha --check-leaks -r @babel/node \"src/test/**/*.test.[tj]s\"",
     "dev": "nodemon",
-    "build": "webpack --mode=production --config webpack.config.js"
+    "build2": "webpack --mode=production --config webpack.config.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

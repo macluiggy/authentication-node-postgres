@@ -24,6 +24,7 @@ const emailExists = check("email").custom(async (value) => {
 
 // login validation
 const loginFieldsCheck = check("email").custom(async (value, { req }) => {
+  // value represents the email, req represents the request
   // return console.log(req.body);
   const { rows } = await db.query("SELECT * FROM users WHERE email = $1", [
     value,
@@ -35,9 +36,9 @@ const loginFieldsCheck = check("email").custom(async (value, { req }) => {
   if (!validPassword) {
     throw new Error("Password is incorrect");
   }
-  req.user = rows[0];
+  req.user = rows[0]; // add the user to the request object so we can access it in the next middleware
 });
 export default {
-  registerValidation: [email, password, emailExists],
-  loginValidation: [loginFieldsCheck],
+  registerValidation: [email, password, emailExists], // register validation
+  loginValidation: [loginFieldsCheck], // login validation
 };
