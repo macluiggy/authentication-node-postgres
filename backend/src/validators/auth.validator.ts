@@ -35,6 +35,7 @@ const loginFieldsCheck = check("email").custom(async (value, { req }) => {
   if (!validPassword) {
     throw new Error("Password is incorrect");
   }
+  req.user = rows[0];
 });
 export default {
   registerValidation: [email, password, emailExists],
