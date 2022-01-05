@@ -1,9 +1,14 @@
 import pool from "../db";
 import { hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
+import { Request, Response, RequestHandler } from "express";
 // import CONSTS from "../constants";
 const { SECRET } = require("../constants");
 // const { SECRET } = CONSTS;
+// interface RequestWith extends RequestHandler {
+//   user: { user_id: number; email: string };
+// }
+// type ReqResMethod = (req: Request| { user: { user_id: string; email: string } }, res: Response) => void;
 
 export const getUsers = async (req, res) => {
   try {
@@ -42,10 +47,26 @@ export const login = async (req, res) => {
     email: user.email,
   };
   try {
-    return res.status(200).json(payload);
+    const token = sign(payload, SECRET); // token is the string that will be sent to the client
+    return res.status(200).cookie("token", token, { httpOnly: true }).json({
+      // httpOnly: true means that the cookie will not be accessible from the frontend
+      success: true, // the user is logged in
+      message: "login successful",
+    });
   } catch (error: unknown) {
     let e = error as ErrorEvent;
     console.log(e.message);
     return res.status(500).json({ error: e.message });
+  }
+};
+
+export const isProtected = async (req, res) => {
+  try {
+    return res.status(200).json({
+      info: "protected info",
+    });
+  } catch (error) {
+    let e = error as ErrorEvent;
+    console.log(e.message);
   }
 };

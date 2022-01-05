@@ -1,9 +1,7 @@
-import { validationResult } from "express-validator";
+// import passport from "passport";
 
-export const validationMiddleware = (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
-  }
-  next();
-};
+// export const userAuth = passport.authenticate("jwt", { session: false });
+const passport = require("passport");
+const { Strategy } = require("passport-jwt");
+
+exports.userAuth = passport.authenticate("jwt", { session: false });
